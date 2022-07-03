@@ -59,7 +59,7 @@ int main()
       }
       break;
 
-      case 4 :
+      default :
       exit(0);
 
     }
