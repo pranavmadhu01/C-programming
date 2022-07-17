@@ -95,7 +95,6 @@ int main()
     }
   }
   float tt_sum =0,wt_sum =0;
-  float tt_avg =0,wt_avg =0;
   printf("ID\t\tAt\t\tBt\t\tCt\t\tTt\t\tWt\n");
   for(int i=0;i<no_process;i++)
   {
