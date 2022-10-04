@@ -1,107 +1,108 @@
-#include<stdio.h>
-struct process{
-  int id;
+#include <stdio.h>
+struct process
+{
   int at;
   int bt;
   int ct;
-  int wt;
   int tt;
+  int wt;
   int visited;
 };
-struct stack
+int mininumBt(int a[], int n)
 {
-  int id;
-  int bt;
-};
+  for (int i = 0; i < n; i++)
+  {
+    printf("%d ", a[i]);
+  }
+  printf("\n");
+  int location = 0;
+  for (int i = 0; i < n; i++)
+  {
+    if (a[i] != -1)
+    {
+      location = i;
+      break;
+    }
+  }
+  for (int i = 0; i < n; i++)
+  {
+    if (a[i] < a[location] && (a[i] != -1 && a[location] != -1))
+    {
+      location = i;
+    }
+  }
+  return (location);
+}
 int main()
 {
-  int no_process,min_index,visited_sum=0,top=-1,post_completion_time;
-  printf("\nEnter the no of process.\n");
-  scanf("%d",&no_process);
-  struct process a[no_process];
-  struct stack b[no_process];
-  printf("\nEnter the process ID, arrival timr and burst time.\n");
-  for(int i =0;i<no_process;i++)
+  int process_no;
+  float avg_tt = 0.0, avg_wt = 0.0;
+  printf("Enter the number of process \n");
+  scanf("%d", &process_no);
+  printf("Enter the arrival time and burst time of each processes\n");
+  struct process a[process_no];
+  int a_bt[process_no];
+  for (int i = 0; i < process_no; i++)
   {
-    scanf("%d %d %d",&a[i].id,&a[i].at,&a[i].bt);
-    a[i].visited =0;
+    scanf("%d %d", &a[i].at, &a[i].bt);
+    a_bt[i] = -1;
+    a[i].visited = 0;
   }
-  for(int i =0;i<no_process;i++)
+  for (int i = 0; i < process_no; i++)
   {
-    int min =i;
-    for(int j=i;j<no_process;j++)
+    for (int j = 0; j < process_no - i - 1; j++)
     {
-      if(a[min].at>=a[j].at)
+      if (a[j].at >= a[j + 1].at)
       {
-        min =j;
-      }
-    }
-    if(min !=i)
-    {
-      min_index =min;
-    }
-  }
-  a[min_index].ct = a[min_index].bt;
-  post_completion_time = a[min_index].ct;
-  a[min_index].tt = a[min_index].ct-a[min_index].at;
-  a[min_index].wt = a[min_index].tt-a[min_index].bt;
-  a[min_index].visited =1;
-  while(visited_sum<=no_process)
-  {
-    for(int i = 0;i<no_process;i++)
-    {
-      if(a[min_index].ct>=a[i].at && a[i].visited!=1)
-      {
-        printf("\nThe process %d has arrived to the queue.\n",a[i].id);
-        top++;
-        b[top].bt = a[i].bt;
-        b[top].id = i;
-      }
-    }
-    for(int i =0;i<=top;i++)
-    {
-      int max =i;
-      for(int j=i;j<=top;j++)
-      {
-        if(b[max].bt<=b[j].bt)
+        if (a[j].at > a[j + 1].at)
         {
-          max =j;
+          struct process temp = a[j];
+          a[j] = a[j + 1];
+          a[j + 1] = temp;
+        }
+        else
+        {
+          if (a[j].bt > a[j + 1].bt)
+          {
+            struct process temp = a[j];
+            a[j] = a[j + 1];
+            a[j + 1] = temp;
+          }
         }
       }
-      if(max !=i)
-      {
-        int temp = b[max].bt;
-        b[max].bt = b[i].bt;
-        b[i].bt = temp;
-
-        temp = b[max].id;
-        b[max].id = b[i].id;
-        b[i].id = temp;
-      }
-    }
-    a[b[top].id].ct = post_completion_time +a[b[top].id].bt;
-    post_completion_time = a[b[top].id].ct;
-    a[b[top].id].tt = a[b[top].id].ct -a[b[top].id].at;
-    a[b[top].id].wt = a[b[top].id].tt -a[b[top].id].bt;
-    min_index = b[top].id;
-    a[b[top].id].visited = 1;
-    top --;
-    for(int i=0;i<no_process;i++)
-    {
-      if(a[i].visited==1)
-      {
-        visited_sum+=a[i].visited;
-      }
     }
   }
-  float tt_sum =0,wt_sum =0;
-  printf("ID\t\tAt\t\tBt\t\tCt\t\tTt\t\tWt\n");
-  for(int i=0;i<no_process;i++)
+  printf("\n");
+  for (int i = 0; i < process_no; i++)
   {
-    printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\t\t%d\n",a[i].id,a[i].at,a[i].bt,a[i].ct,a[i].tt,a[i].wt);
-    tt_sum += a[i].tt;
-    wt_sum += a[i].wt;
+    printf("%d", a[i].bt);
   }
-  printf("\nThe average turn around time is :%f.\n\nThe average waiting time is:%f.",(tt_sum/no_process),(wt_sum/no_process));
-  return 0;
+  printf("\n");
+  a[0].ct = a[0].at + a[0].bt;
+  a[0].tt = a[0].ct - a[0].at;
+  a[0].wt = a[0].tt - a[0].bt;
+  a[0].visited = 1;
+  int ct = a[0].ct;
+  for (int i = 1; i < process_no; i++)
+  {
+    for (int j = 1; j < process_no; j++)
+    {
+      if (a[j].at <= ct && a[j].visited != 1)
+      {
+        a_bt[j] = a[j].bt;
+      }
+    }
+    int min_index = mininumBt(a_bt, process_no);
+    printf("min_index = %d\n", min_index);
+    a[min_index].ct = ct + a[min_index].bt;
+    a[min_index].tt = a[min_index].ct - a[min_index].at;
+    a[min_index].wt = a[min_index].tt - a[min_index].bt;
+    a[min_index].visited = 1;
+    a_bt[min_index] = -1;
+    avg_tt = avg_tt + a[min_index].tt;
+    avg_wt = avg_wt + a[min_index].wt;
+    ct = a[min_index].ct;
+  }
+
+  printf("The average turn around time and waiting time is %f and %f\n", ((avg_tt + a[0].tt) / process_no), ((avg_wt + a[0].wt) / process_no));
 }
