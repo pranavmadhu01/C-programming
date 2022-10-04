@@ -26,7 +26,7 @@ int main()
   for(int i =0;i<no_partitions;i++)
   {
     int max =i;
-    for(int j =i+1;j<no_partitions;j++)
+    for(int j =i;j<no_partitions;j++)
     {
       if(a[j].space>=a[max].space)
       {
@@ -43,7 +43,7 @@ int main()
   for(int i =0;i<no_process;i++)
   {
     int max =i;
-    for(int j =i+1;j<no_process;j++)
+    for(int j =i;j<no_process;j++)
     {
       if(b[j]>=b[max])
       {
@@ -86,3 +86,6 @@ int main()
     }
   }
 }
+
+
+
