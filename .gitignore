@@ -1,1 +1,5 @@
 a.out
+a.exe
+y.*.*
+lex.yy.*
+program
