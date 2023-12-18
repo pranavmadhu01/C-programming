@@ -68,8 +68,7 @@ int main()
         }
         else
         {
-            if(check()){}
-            else
+            if(!check())
             {   
                 strcpy(action,"SHIFT");
                 stack[k]=input[i];
@@ -80,8 +79,8 @@ int main()
                 i++;
                 printf("%s\t%s\t%s %c\n",stack,input,action,temp);
                 check();
-
             }
         }
     }
+    return 0;
 }

@@ -13,18 +13,18 @@ int main()
         printf("Enter the choice.\n");
         printf("1. For loop rolling\n");
         printf("2. For loop unrolling\n");
-        printf("3. Press any other key for exitinf the program\n");
+        printf("3. Press any other key for exiting the program\n");
         int choice;
         scanf("%d", &choice);
         switch (choice)
         {
         case 1:
             bits = loop_rolling(n);
-            printf("The number of bits is %d", bits);
+            printf("The number of bits is %d\n\n", bits);
             break;
         case 2:
             bits = loop_unrolling(n);
-            printf("The number of bits is %d", bits);
+            printf("The number of bits is %d\n\n", bits);
             break;
         default:
         {
@@ -46,7 +46,7 @@ int loop_rolling(int n)
         n >>= 1;
         iterations++;
     }
-    printf("The number of iterations is %d", iterations);
+    printf("\nThe number of iterations is %d\n", iterations);
     return bits;
 }
 int loop_unrolling(int n)
@@ -65,6 +65,6 @@ int loop_unrolling(int n)
         n >>= 4;
         iterations++;
     }
-    printf("The number of iterations is %d", iterations);
+    printf("\nThe number of iterations is %d\n", iterations);
     return bits;
 }

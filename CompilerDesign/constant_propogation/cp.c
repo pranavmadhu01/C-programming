@@ -30,10 +30,7 @@ void input()
     printf("Enter the expressions.\n");
     for (int i = 0; i < n; i++)
     {
-        scanf("%s", arr[i].op);
-        scanf("%s", arr[i].op1);
-        scanf("%s", arr[i].op2);
-        scanf("%s", arr[i].res);
+        scanf("%s %s %s %s", arr[i].op, arr[i].op1, arr[i].op2, arr[i].res);
         arr[i].flag = 0;
     }
 }
@@ -75,7 +72,6 @@ void constant()
 
 void change(int i, int res)
 {
-    printf("Hello\n");
     char res1[5];
     sprintf(res1, "%d", res);
     for (int j = i + 1; j < n; j++)
@@ -84,7 +80,7 @@ void change(int i, int res)
         {
             strcpy(arr[j].op1, res1);
         }
-        else if (strcmp(arr[i].res, arr[j].op2) == 0)
+        if (strcmp(arr[i].res, arr[j].op2) == 0)
         {
             strcpy(arr[j].op2, res1);
         }
