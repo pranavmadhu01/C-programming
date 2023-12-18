@@ -3,3 +3,5 @@ a.exe
 y.*.*
 lex.yy.*
 program
+client
+server
